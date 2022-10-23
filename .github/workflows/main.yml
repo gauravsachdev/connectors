@@ -20,13 +20,13 @@ jobs:
           rm ./geoedf/docs/*
           find . -type f -name "*.rst"  > files.txt
           while read p; do
-              cp "$p" ./geoedf/docs/
+              mv "$p" ./geoedf/docs/
               echo "$p"
           done <files.txt
+          pwd
       - name: List of processors/connectors
         run: |
           ls -al
-          cd ../
           pwd
           git clone https://github.com/geoedf/connectors.git
           cd ./connectors/
