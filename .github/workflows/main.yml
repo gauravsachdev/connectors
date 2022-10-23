@@ -1,0 +1,60 @@
+# This workflow determine which processor have changed,
+# builds and pushes a Singularity container for each of those processor plugins
+
+name: commit_docs
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: pulling the repo
+        run: |
+          git clone https://github.com/gauravsachdev/geoedf.git
+          cp -n ./geoedf/docs/* ./
+          rm ./geoedf/docs/*
+          find . -type f -name "*.rst"  > files.txt
+          while read p; do
+              cp "$p" ./geoedf/docs/
+              echo "$p"
+          done <files.txt
+      - name: List of processors/connectors
+        run: |
+          git clone https://github.com/geoedf/connectors.git
+          cd ./connectors/
+          ls -d */ | sed 's#/##' > connectors_list.txt
+          cp ./connectors_list.txt ./../geoedf
+          cd ../
+      - name: Updating list of connectors/processors
+        run: |
+          cd ./geoedf
+          cd ./docs
+          rm connectors-list.rst
+          touch connectors-list.rst
+          echo ".. toctree::">> connectors-list.rst
+          echo -e "\t:maxdepth: 2">> connectors-list.rst
+          files = $(cat ./../connectors_list.txt)
+          for file in $files:
+          do
+            echo -e "\t$file"
+          done
+          rm ./../connectors_list.txt
+      - name: Pushes to another repository
+        id: push_directory
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+        with:
+          source-directory: geoedf
+          destination-github-username: 'gauravsachdev'
+          destination-repository-name: 'geoedf'
+          user-email: 'gaurav1565@gmail.com'
+          commit-message: See ORIGIN_COMMIT from $GITHUB_REF
+          target-branch: master
+      - name: Test get variable exported by push-to-another-repository
+        run: echo $DESTINATION_CLONED_DIRECTORY
