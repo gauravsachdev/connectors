@@ -38,6 +38,7 @@ jobs:
           touch connectors-list.rst
           echo ".. toctree::">> connectors-list.rst
           echo -e "   :maxdepth: 2">> connectors-list.rst
+          echo -e "\n"
           while read line; do echo '   '$line>> connectors-list.rst; done < ./../connectors_list.txt
           rm ./../connectors_list.txt
       - name: Pushes to another repository
