@@ -32,16 +32,13 @@ jobs:
           ls -d */ | sed 's#/##' > connectors_list.txt
           cp ./connectors_list.txt ./../geoedf
           cd ../
-          ls
-          pwd
           cd ./geoedf
           cd ./docs
           rm connectors-list.rst
           touch connectors-list.rst
           echo ".. toctree::">> connectors-list.rst
           echo -e "\t:maxdepth: 2">> connectors-list.rst
-          files = $(cat ./../connectors_list.txt)
-          for file in $files:
+          for file in $(cat ./../connectors_list.txt):
           do
             echo -e "\t$file"
           done
