@@ -30,8 +30,6 @@ jobs:
           ls -d */ | sed 's#/##' > connectors_list.txt
           cp ./connectors_list.txt ./../geoedf
           cd ../
-      - name: Updating list of connectors/processors
-        run: |
           pwd
           cd ../../
           ls -al
