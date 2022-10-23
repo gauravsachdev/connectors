@@ -32,6 +32,7 @@ jobs:
           cd ../
       - name: Updating list of connectors/processors
         run: |
+          ls -al
           cd ./geoedf
           cd ./docs
           rm connectors-list.rst
