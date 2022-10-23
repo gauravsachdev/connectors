@@ -34,6 +34,7 @@ jobs:
         run: |
           pwd
           cd ../../
+          ls -al
           cd ./geoedf
           cd ./docs
           rm connectors-list.rst
