@@ -27,15 +27,10 @@ jobs:
           ls -al
       - name: List of processors/connectors
         run: |
-          ls -al
-          pwd
           git clone https://github.com/geoedf/connectors.git
           cd ./connectors/
           ls -d */ | sed 's#/##' > connectors_list.txt
           cp ./connectors_list.txt ./../geoedf
-          cd ../../
-          pwd
-          cd ../../
           ls -al
           cd ./geoedf
           cd ./docs
