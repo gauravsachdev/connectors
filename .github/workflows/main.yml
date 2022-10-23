@@ -25,6 +25,8 @@ jobs:
           done <files.txt
       - name: List of processors/connectors
         run: |
+          ls -al
+          pwd
           git clone https://github.com/geoedf/connectors.git
           cd ./connectors/
           ls -d */ | sed 's#/##' > connectors_list.txt
