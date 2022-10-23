@@ -31,7 +31,9 @@ jobs:
           cd ./connectors/
           ls -d */ | sed 's#/##' > connectors_list.txt
           cp ./connectors_list.txt ./../geoedf
-          ls -al
+          cd ../
+          ls
+          pwd
           cd ./geoedf
           cd ./docs
           rm connectors-list.rst
